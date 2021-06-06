@@ -12,13 +12,33 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   SwiperController _swiperController = SwiperController();
+
   final List<String> images = [
     'assets/images/l1.jpg',
     'assets/images/l2.jpg',
     'assets/images/l3.jpg',
     'assets/images/l4.jpg'
   ];
-  List<String> details = ['Top Speed', '308km/h', 'D-100KM', '3.6 seconds'];
+
+  List<Image> loadImages = [];
+  String? strImg;
+  Image? img;
+
+  @override
+  initState() {
+    super.initState();
+    for (strImg in images) {
+      loadImages.add(Image.asset(strImg!));
+    }
+  }
+
+  @override
+  didChangeDependencies() {
+    super.didChangeDependencies();
+    for (img in loadImages) {
+      precacheImage(img!.image, context);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
